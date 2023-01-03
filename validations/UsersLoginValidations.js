@@ -21,6 +21,7 @@ async function loginValidUser( req , res, next){
 	    if (!isMatch) {
 			return res.send({message:'pass invalid' ,logged:false})
 		}
+		req.body.name = user.name
 		next()
 	}
 	catch{

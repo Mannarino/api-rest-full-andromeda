@@ -30,7 +30,7 @@ usersCtrl.loginUser = async (req)=>{
 		email: req.body.email
 			}
 			const token = jwt.sign(payload,config.KEY_SECRET_TOKEN,{expiresIn:'1h'})
-			return {token:token, logged:true, message:'usuario logueado', email: req.body.email}
+			return {token:token, logged:true, message:'usuario logueado', email: req.body.email ,name: req.body.name}
 		} 
 	catch{
 			return res.send({message: "error interno del servidor"})
