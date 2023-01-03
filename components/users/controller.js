@@ -18,16 +18,36 @@ usersCtrl.registUser = async (name, email, password)=>{
 		}
 		const token = jwt.sign(payload,config.KEY_SECRET_TOKEN,{expiresIn:'1h'})
 		return {token:token}
-	} catch{
-		return {message: "error interno del servidor"}
+	} 
+	catch{
+		return res.send({message: "error interno del servidor"})
 	}
 	
 }
-usersCtrl.loginUser = async (email)=>{
-	const payload = {
-		email: email
+usersCtrl.loginUser = async (req)=>{
+	try{
+		const payload = {
+		email: req.body.email
+			}
+			const token = jwt.sign(payload,config.KEY_SECRET_TOKEN,{expiresIn:'1h'})
+			return {token:token, logged:true, message:'usuario logueado', email: req.body.email}
+		} 
+	catch{
+			return res.send({message: "error interno del servidor"})
+		}
 	}
-	const token = jwt.sign(payload,config.KEY_SECRET_TOKEN,{expiresIn:'1h'})
-	return {token:token, estado:'usuario logueado', email: email}
+	
+usersCtrl.checkEmailAvailable = async (email)=>{
+	try{
+		const user = await modelo.findOne({email:email})
+		if (user) {
+			return {available:false,message:'mail ya en uso'}
+		} else {
+			return {available:true,message:'mail disponible'}
+		}
+	}
+	catch{
+			return res.send({message: "error interno del servidor"})
+		}
 }
 module.exports = usersCtrl
