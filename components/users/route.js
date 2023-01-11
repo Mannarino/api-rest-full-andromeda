@@ -5,6 +5,7 @@ var controller = require('./controller')
 var router = express.Router()
 const validationsRegis = require('./../../validations/UsersRegistValidations.js')
 const validationsLogin = require('./../../validations/UsersLoginValidations.js')
+const response = require('./../../network/responses.js')
 
 router.get('/',(req,res)=>{
 	modelo.find({})
@@ -20,16 +21,21 @@ router.get('/checkEmailAvailable', async (req,res)=>{
      
 })
 router.post('/regist',validationsRegis, async (req,res)=>{
-	const token = await controller.registUser(req.body.name,
-		req.body.email,req.body.password)
-	if(token){
-		res.json(token)
+	const responseController = await controller.registUser(req.body.name,req.body.email,req.body.password)
+	if(responseController.success){
+		response.success(req,res,{regist:true}," user created successfuly",201,{token:responseController.token})
+	}else{
+		response.error(req,res,{regist:false}," internal error server")
 	}
 	
 })
 router.post('/login',validationsLogin,async (req,res)=>{
-	const estadoLogueado = await  controller.loginUser(req)
-	res.json(estadoLogueado)
+	const responseController = await  controller.loginUser(req)
+	if(responseController.success){
+		response.success(req,res,{login:true}," user loged successfuly",201,responseController.data)
+	}else{
+		response.error(req,res,{login:false}," internal error server")
+	}
 })
 
 router.get('/:id',(req,res)=>{
@@ -38,8 +44,13 @@ router.get('/:id',(req,res)=>{
 
 
 
-router.put('/:id',(req,res)=>{
-	
+router.put('/:id',async (req,res)=>{
+	const _id = req.params.id;
+	const name = req.body.name
+	const email = req.body.email
+	const rol = req.body.rol
+    const userUpdated = await  controller.updateUser(_id,name, email, rol)
+	res.json(userUpdated)
 })
 
 router.delete('/:id',(req,res)=>{

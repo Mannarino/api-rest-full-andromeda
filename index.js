@@ -1,7 +1,7 @@
 
 const express = require('express')
 const app = express()
-const routes = require('./routers.js')
+const routes = require('./network/routers.js')
 const DBconection = require('./db.js')
 const cors = require('cors')
 

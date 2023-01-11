@@ -7,20 +7,21 @@ const usersCtrl = {}
 usersCtrl.registUser = async (name, email, password)=>{
 	try{
 		const hashedPassword = await bcrypt.hash(password,11)
-		const admin = await modelo.create({
+		const user = await modelo.create({
 			name: name,
 	    	email: email,
-	    	password : hashedPassword
+	    	password : hashedPassword,
+	    	rol:"basic"
 		})
 		const payload = {
 			name: name,
 			email: email
 		}
 		const token = jwt.sign(payload,config.KEY_SECRET_TOKEN,{expiresIn:'1h'})
-		return {token:token}
+		return {success:true,token:token}
 	} 
 	catch{
-		return res.send({message: "error interno del servidor"})
+		return {success:false,message: "error interno del servidor"}
 	}
 	
 }
@@ -29,11 +30,18 @@ usersCtrl.loginUser = async (req)=>{
 		const payload = {
 		email: req.body.email
 			}
-			const token = jwt.sign(payload,config.KEY_SECRET_TOKEN,{expiresIn:'1h'})
-			return {token:token, logged:true, message:'usuario logueado', email: req.body.email ,name: req.body.name}
+		const token = jwt.sign(payload,config.KEY_SECRET_TOKEN,{expiresIn:'1h'})
+        const data = {
+        	token:token,
+        	user:{
+        		email: req.body.email,
+        		name: req.body.name
+        	}
+        }
+		return {success:true,data}
 		} 
 	catch{
-			return res.send({message: "error interno del servidor"})
+			return {success:false,message: "error interno del servidor"}
 		}
 	}
 	
@@ -47,7 +55,22 @@ usersCtrl.checkEmailAvailable = async (email)=>{
 		}
 	}
 	catch{
-			return res.send({message: "error interno del servidor"})
+			return {message: "error interno del servidor"}
 		}
+	}	
+usersCtrl.updateUser = async (_id, name, email, rol)=>{
+	try{
+		const user = await modelo.updateOne({_id:_id}, { $set:{
+			name : name,
+			email : email,
+			rol : rol
+		} })
+		
+			return user
+		
+	}
+	catch{
+			return {message: "error interno del servidor"}
+		}		
 }
 module.exports = usersCtrl

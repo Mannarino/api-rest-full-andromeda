@@ -1,31 +1,32 @@
 const bcrypt = require('bcrypt')
 const modelo = require('./../components/users/model.js')
+const response = require('./../network/responses.js')
 
 async function loginValidUser( req , res, next){
 	try{
 		const {email,password} = req.body
 		if(!email){
-			return res.send({ logged:false,message:" no enviaste email"})
+			return response.error(req,res,{login:false}," no enviaste el mail")
 		}
 		if( !/\S+@\S+\.\S+/.test(email)){
-			return res.send({ logged:false,message:"no es un email"})
+			return response.error(req,res,{login:false}," no es un email")
 		}
 		if(!password){
-			return res.send({ logged:false,message:" no enviaste password"})
+			return response.error(req,res,{login:false}," no enviaste password")
 		}
 		const user = await modelo.findOne({email:email})
 		if (!user) {
-			return res.send({ logged:false,message:'usuario no encontrado'})
+			return response.error(req,res,{login:false},'usuario no encontrado')
 		}
 	    const isMatch = await bcrypt.compare(req.body.password,user.password)
 	    if (!isMatch) {
-			return res.send({message:'pass invalid' ,logged:false})
+			return response.error(req,res,{login:false},'pass invalid')
 		}
 		req.body.name = user.name
 		next()
 	}
 	catch{
-		return res.send({message: "error interno del servidor"})
+		return response.error(req,res,{login:false}, "error interno del servidor")
 	}
 }
 
