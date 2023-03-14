@@ -1,8 +1,8 @@
 const routerPeople = require('./../components/people/route.js')
 const routerUsers = require('./../components/users/route.js')
-const ValidationAuth = require('./../validations/AuthorizationValidate.js')
+const VerifyToken= require('./../middelwares/verifyTokenValid.js')
 function routes(app) {
-	app.use('/people',ValidationAuth, routerPeople)
+	app.use('/people',VerifyToken, routerPeople)
     app.use('/users', routerUsers)
 }
 

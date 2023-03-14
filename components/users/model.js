@@ -5,10 +5,10 @@ var userScheme=  mongoose.Schema({
 	email: String,
 	password :String,
 	rol: {
-    type: String,
-    enum: ['basic', 'platino','gold','superadmin'],
-    default : 'basic'
-  }
+	    type: String,
+	    enum: ['basic', 'platino','gold','superadmin'],
+	    default : 'basic'
+	  }
 })
 
 var modelUsers = mongoose.model('user',userScheme)

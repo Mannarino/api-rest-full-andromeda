@@ -2,17 +2,19 @@ var express = require ('express')
 const jwt = require('jsonwebtoken')
 const config = require('./../config.js')
 
-function verificar (req, res, next){
+//solo verifica que sea un token valido
+function verificarTokenValido (req, res, next){
 	try {
 		const head = req.headers.authorization
 		if(!head){
 			res.send({message:'no enviaste autorization'})
 		}
-		
 		const token = head.split(" ")[1]
-	    
 	    const payload = jwt.verify(token,config.KEY_SECRET_TOKEN)
-	    console.log('paso por la autenticacion correctamente')
+
+	    req.rol = payload.rol
+	    console.log("el rol de este urusario es "+req.rol)
+	    console.log('token valido de autenticacion')
 	    next()
 	}
 	catch{
@@ -21,4 +23,4 @@ function verificar (req, res, next){
 	
 }
 
-module.exports = verificar
+module.exports = verificarTokenValido

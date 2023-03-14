@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const controller = require('./controller.js')
+const verifyRoles = require('./../../middelwares/verifyRol')
 
 
-router.get('/',async(req,res)=>{ 
+router.get('/',verifyRoles('basic'), async(req,res)=>{ 
 	  const category = req.query.category
 	  if(category){
         let reesponse = await controller.getPeopleByCategory(category)

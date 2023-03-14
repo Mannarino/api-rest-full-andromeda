@@ -1,6 +1,7 @@
 const modelo = require('./model.js')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const response = require('./../../network/responses.js')
 const config = require('./../../config.js')
 const usersCtrl = {}
 
@@ -14,10 +15,9 @@ usersCtrl.registUser = async (name, email, password)=>{
 	    	rol:"basic"
 		})
 		const payload = {
-			name: name,
-			email: email
+			rol:"basic"
 		}
-		const token = jwt.sign(payload,config.KEY_SECRET_TOKEN,{expiresIn:'1h'})
+		const token = jwt.sign(payload,config.KEY_SECRET_TOKEN,{expiresIn:'3h'})
 		return {success:true,token:token}
 	} 
 	catch{
@@ -27,15 +27,25 @@ usersCtrl.registUser = async (name, email, password)=>{
 }
 usersCtrl.loginUser = async (req)=>{
 	try{
+		const {email,password} = req.body
+		const user = await modelo.findOne({email:email})
+		if (!user) {
+			return response.error(req,res,{login:false},'usuario no encontrado')
+		}
+	    const isMatch = await bcrypt.compare(password,user.password)
+	    if (!isMatch) {
+			return response.error(req,res,{login:false},'pass invalid')
+		}
 		const payload = {
-		email: req.body.email
+        		rol: user.rol
 			}
-		const token = jwt.sign(payload,config.KEY_SECRET_TOKEN,{expiresIn:'1h'})
+		const token = jwt.sign(payload,config.KEY_SECRET_TOKEN,{expiresIn:'3h'})
         const data = {
         	token:token,
         	user:{
-        		email: req.body.email,
-        		name: req.body.name
+        		email: user.email,
+        		name: user.name,
+        		rol: user.rol
         	}
         }
 		return {success:true,data}
