@@ -1,21 +1,41 @@
-const model = require('./model')
+const store = require('./store.js')
 
 const controllerPeople = {
-	createPerson: async (name,birthDate,photo,category)=>{
-
-		const createdPerson= await model.create({
-			name:name,
-			birthDate:birthDate,
-			photo:photo,
-			category:category
-		})
-        return createdPerson
+	createPersonController: async (name,birthDay,passAway,photo,category,viewAllowed)=>{
+        const PersonCompletyToRespond ={}
+		const createdPerson= await store.createPersonStore(
+			name,
+			birthDay,
+			passAway,
+			photo,
+			category,
+			viewAllowed
+		)
+		function getAge(){
+			let today = new Date()
+			let dateOfBirth= createdPerson.birthDay
+			let age = today.getFullYear() - dateOfBirth.getFullYear()
+			let differenceMonths = today.getMonth() - dateOfBirth.getMonth()
+			if(differenceMonths < 0){
+				age--
+			}
+			return age
+		}
+		age = getAge()
+        //I created this another objetc called PersonCompletyToRespond
+        // because the objetc that mongoose gave me ,it is not writable, so that
+        // don't let me to add the property age to the objetc respond
+        PersonCompletyToRespond.name=createdPerson.name
+        PersonCompletyToRespond.birthDay=createdPerson.birthDay
+        PersonCompletyToRespond.photo=createdPerson.photo
+        PersonCompletyToRespond.category=createdPerson.category
+        PersonCompletyToRespond.age=age
+        PersonCompletyToRespond.viewAllowed=viewAllowed
+        return PersonCompletyToRespond
 	},
-	getAllPeople: async ()=>{
-
-		const completeList= await model.find({})
-		
-        return completeList
+	getPeopleController: async (skip,limit,category)=>{
+	  	let response  = await store.getPeopleStore(skip,limit,category)
+        return response
 	},
 	getPeopleByCategory: async (category)=>{
 

@@ -4,18 +4,14 @@ const controller = require('./controller.js')
 const verifyRoles = require('./../../middelwares/verifyRol')
 
 
-router.get('/',verifyRoles('basic'), async(req,res)=>{ 
+router.get('/',/*verifyRoles('basic'),*/ async(req,res)=>{ 
+	  const limit = parseInt(req.query.limit); // Asegúrate de parsear el límite a número
+      const skip = parseInt(req.query.skip);// Asegúrate de parsear el salto a número
 	  const category = req.query.category
-	  if(category){
-        let reesponse = await controller.getPeopleByCategory(category)
-        res.send(response)
-	  }
-	  else{
-	  	let response  = await controller.getAllPeople()
-        res.send(response)
-	  }
 	  
-      
+        let response = await controller.getPeopleController(skip,limit,category)
+        res.send(response)
+	     
 })
 router.get('/:id',async(req,res)=>{ 
 	  const id = req.params.id
@@ -40,12 +36,14 @@ router.delete('/:id',async(req,res)=>{
 })
 router.post('/', async (req,res)=>{
 	    const name = req.body.name
-		const birthDate = req.body.birthDate
+		const birthDay = req.body.birthDay
+		const passAway = req.body.passAway
 		const photo = req.body.photo
 		const category = req.body.category
+		const viewAllowed = req.body.viewAllowed
 	  try{
-	  	 response= await controller.creartePerson(name,birthDate,photo,category)
-	  	res.send(respuesta)
+	  	 response= await controller.createPersonController(name,birthDay,passAway,photo,category,viewAllowed)
+	  	res.send(response)
 	  }catch(e){
 	  	console.log(e)
 	  	res.send('internal server error')
