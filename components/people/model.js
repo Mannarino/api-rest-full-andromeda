@@ -4,14 +4,15 @@ const peopleScheme =
 		mongoose.Schema({
 			name:{type:String,required:true},
 			birthDay:{type:Date,required:true },
-			passAway:{type:Date},
+			yearPassAway:{type:Date},
+			passAway:{type:Boolean },
 			photo:{type:String,required:true},
 			category:{type:String,
 					  required:true,
 					  enum:['woman','man','not-specified']},
 			viewAllowed:{type:String,
 				         required:true, 
-				         enum:['free','gold']}
+				         enum:['free','platino','gold']}
 		})
 
 const modelPeople = mongoose.model('people',peopleScheme)

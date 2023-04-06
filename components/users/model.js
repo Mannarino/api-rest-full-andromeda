@@ -6,8 +6,8 @@ var userScheme=  mongoose.Schema({
 	password :String,
 	rol: {
 	    type: String,
-	    enum: ['basic', 'platino','gold','superadmin'],
-	    default : 'basic'
+	    enum: ['free', 'platino','gold'],
+	    default : 'free'
 	  }
 })
 

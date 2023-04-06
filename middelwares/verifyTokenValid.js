@@ -5,7 +5,7 @@ const config = require('./../config.js')
 //solo verifica que sea un token valido
 function verificarTokenValido (req, res, next){
 	try {
-		const head = req.headers.authorization
+		const head = req.headers.authorization || req.headers.Authorization
 		if(!head){
 			res.send({message:'no enviaste autorization'})
 		}

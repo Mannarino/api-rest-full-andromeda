@@ -14,7 +14,6 @@ const response = require('./../network/responses.js')
 		if(!password){
 			return response.error(req,res,{login:false}," no enviaste password")
 		}
-		
 		next()
 	}
 	catch{
