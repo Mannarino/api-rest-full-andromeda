@@ -6,4 +6,4 @@ const configToDeploy = {
 }
 
 
-module.exports= config
+module.exports= configToDeploy
