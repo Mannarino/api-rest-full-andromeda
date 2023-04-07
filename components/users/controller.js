@@ -2,7 +2,7 @@ const modelo = require('./model.js')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const response = require('./../../network/responses.js')
-const config = require('./../../config.js')
+const config = require('./../../configToDeploy.js')
 const usersCtrl = {}
 
 usersCtrl.registUser = async (name, email, password)=>{
