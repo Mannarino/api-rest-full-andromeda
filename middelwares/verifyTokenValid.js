@@ -1,6 +1,6 @@
 var express = require ('express')
 const jwt = require('jsonwebtoken')
-const config = require('./../config.js')
+const config = require('./../configToDeploy.js')
 
 //solo verifica que sea un token valido
 function verificarTokenValido (req, res, next){
