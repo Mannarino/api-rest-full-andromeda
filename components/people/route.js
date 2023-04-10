@@ -16,13 +16,7 @@ router.get('/', async(req,res)=>{
         	res.send(response)
 	    }*/
 
-	    if(countElements){
-	    	let response = await controller.getFreeAndPlatinoPeopleController(skip,limit, /*countElements*/)
-        	res.send(response)
-	    }
-
-
-
+	 
         let response = await controller.getFreeAndPlatinoPeopleController(skip,limit)
         res.send(response)
 	     
