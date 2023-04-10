@@ -16,8 +16,8 @@ const controllerPeople = {
 		
         return createdPerson
 	},
-	getAllPeopleController: async (skip,limit)=>{
-	  	let people  = await store.getAllPeopleStore(skip,limit)
+	getAllPeopleController: async (skip,limit,/*count*/)=>{
+	  	let people  = await store.getAllPeopleStore(skip,limit,/*count*/)
 	  	let response = helpers.addAgeOnList(people)
         return response
 	},
