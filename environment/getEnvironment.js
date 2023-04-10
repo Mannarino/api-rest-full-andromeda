@@ -1,7 +1,9 @@
    function getEnvironment(){
    		try{
-   			console.log('entorno local')
              const config = require('./config')
+             if(config){
+                console.log('entorno local')
+             }
              return config
    		}
    		catch{
