@@ -7,9 +7,15 @@ const PeopleCreateValidations = require('./../../validations/PeopleCreateValidat
 //endopint free y platino,
 // no se requiere token ni autorizathion para obtener esta data
 router.get('/', async(req,res)=>{ 
-	  const limit = parseInt(req.query.limit); // Asegúrate de parsear el límite a número
-      const skip = parseInt(req.query.skip);// Asegúrate de parsear el salto a número
-	  
+	    const limit = parseInt(req.query.limit); // Asegúrate de parsear el límite a número
+        const skip = parseInt(req.query.skip);// Asegúrate de parsear el salto a número
+	    //console countElements = req.query.count
+	    /*if(countElements){
+	    	let response = await controller.getFreeAndPlatinoPeopleController(skip,limit, countElements)
+        	res.send(response)
+	    }*/
+
+
         let response = await controller.getFreeAndPlatinoPeopleController(skip,limit)
         res.send(response)
 	     

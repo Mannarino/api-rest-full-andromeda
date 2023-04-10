@@ -30,6 +30,7 @@ const storePeople = {
 			)
 			  .skip(skip)
 			  .limit(limit)
+			  /*.count()*/
         return response	
 	},
 	getAllPeopleStore: async (skip,limit,category)=>{   
