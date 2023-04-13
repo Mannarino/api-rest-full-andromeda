@@ -6,33 +6,40 @@ const PeopleCreateValidations = require('./../../validations/PeopleCreateValidat
 
 //endopint free y platino,
 // no se requiere token ni autorizathion para obtener esta data
-router.get('/', async(req,res)=>{ 
+router.get('/free-and-platino', async(req,res)=>{ 
 	    const limit = parseInt(req.query.limit); // Asegúrate de parsear el límite a número
         const skip = parseInt(req.query.skip);// Asegúrate de parsear el salto a número
-	    //console countElements = req.query.count
-
-	    /*if(countElements){
-	    	let response = await controller.getFreeAndPlatinoPeopleController(skip,limit, countElements)
-        	res.send(response)
-	    }*/
-
-	 
-        let response = await controller.getFreeAndPlatinoPeopleController(skip,limit)
+	    const countElements = req.query.count 
+	   
+        let response = await controller.freeAndPlatinoPeopleController(skip,limit,countElements)
         res.send(response)
 	     
 })
 
 //enpoint gold se requiere token para obtener esta data
-router.get('/gold',verifyToken,/*verifyRoles('basic'),*/ async(req,res)=>{ 
+router.get('/gold', verifyToken, async(req,res)=>{ 
+	console.log('llego el request a gold')
 	  const limit = parseInt(req.query.limit); // Asegúrate de parsear el límite a número
       const skip = parseInt(req.query.skip);// Asegúrate de parsear el salto a número
+	  const countElements = req.query.count 
 	  
-	  console.log(req.query)
-        let response = await controller.getAllPeopleController(skip,limit)
-        res.send(response)
-
+	  let response = await controller.goldPeopleController(skip,limit,countElements)
+      res.send(response)  	
+    
 })
-router.post('/',PeopleCreateValidations, async (req,res)=>{
+//enpoint all se requiere token para obtener esta data
+/*router.get('/all',verifyToken, async(req,res)=>{ 
+	  const limit = parseInt(req.query.limit); // Asegúrate de parsear el límite a número
+      const skip = parseInt(req.query.skip);// Asegúrate de parsear el salto a número
+	  const countElements = req.query.count 
+	  const all = req.query.all
+	  const gold = req.query.membresia
+	  
+	  let response = await controller.goldPeopleController(skip,limit,membresia,countElements,all,gold)
+      res.send(response)  	
+    
+}) */
+router.post('/free-and-platino',PeopleCreateValidations, async (req,res)=>{
 	console.log(req.body)
 	    const name = req.body.name
 		const birthDay = req.body.birthDay
@@ -46,7 +53,24 @@ router.post('/',PeopleCreateValidations, async (req,res)=>{
 	  	res.send(response)
 	  }catch(e){
 	  	console.log(e)
-	  	res.send('internal server error')
+	  	res.status(500).send('internal server error')
+	  }		
+})
+router.post('/gold',verifyToken,PeopleCreateValidations, async (req,res)=>{
+	console.log(req.body)
+	    const name = req.body.name
+		const birthDay = req.body.birthDay
+		const passAway = req.body.passAway
+		const yearPassAway = req.body.yearPassAway
+		const photo = req.body.photo
+		const category = req.body.category
+		const viewAllowed = req.body.viewAllowed
+	  try{
+	  	 response= await controller.createPersonController(name,birthDay,passAway,yearPassAway,photo,category,viewAllowed)
+	  	 return res.send(response)
+	  }catch(e){
+	  	console.log(e)
+	  	return res.status(500).send('internal server error')
 	  }		
 })
 /*router.get('/', async(req,res)=>{ 

@@ -20,11 +20,24 @@ const storePeople = {
 	
         return createdPerson
 	},
+	//--------metodos store para el controlador freeAndPlatinoController
+	getCountFreeAndPlatinoPeopleStore: async ()=>{  
+		let response = await model.find({ viewAllowed:{$ne:'gold'}}).count()
+		console.log(response)
+		let numeroDePeopleFreeandPlatino = {categoria:"free and platino",numero:response}	
+        return numeroDePeopleFreeandPlatino
+	},
 	getFreeAndPlatinoPeopleStore: async (skip,limit)=>{   
 		/*When methods skip and limit receive an invalid value, 
 		they automatically ignore it and do not act, and 
-		only work when they receive a valid integer */  
-		
+		only work when they receive a valid integer */  	
+		let response = await model.find({ viewAllowed:  {$ne:'gold'}})	  
+        return response	
+	},
+	getPaginationFreeAndPlatinoPeopleStore: async (skip,limit)=>{   
+		/*When methods skip and limit receive an invalid value, 
+		they automatically ignore it and do not act, and 
+		only work when they receive a valid integer */  	
 		let response = await model.find(
 			{ viewAllowed:  {$ne:'gold'}}	   
 			)
@@ -33,6 +46,28 @@ const storePeople = {
 			  /*.count()*/
         return response	
 	},
+	//------ fin metodos store para el controlador freeAndPlatinoController
+
+	//--------metodos store para el controlador goldPeopleController
+	getCountGoldPeopleStore: async ()=>{  
+		let response = await model.find({ viewAllowed:'gold'}).count()
+		console.log(response)
+		let numeroDePeopleGold = {categoria:"gold",numero:response}	
+        return numeroDePeopleGold
+	},
+	getGoldPeopleStore: async ()=>{  
+		let response = await model.find({ viewAllowed:'gold'})
+		
+        return response
+	},
+	getPaginationGoldPeopleStore: async (skip,limit)=>{  
+		let response = await model.find({ viewAllowed:'gold'}).skip(skip).limit(limit)
+        return response
+	},
+	//------ fin metodos store para el controlador goldPeopleoController
+
+
+
 	getAllPeopleStore: async (skip,limit,category)=>{   
 		/*When methods skip and limit receive an invalid value, 
 		they automatically ignore it and do not act, and 

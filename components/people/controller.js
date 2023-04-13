@@ -16,16 +16,94 @@ const controllerPeople = {
 		
         return createdPerson
 	},
-	getAllPeopleController: async (skip,limit,/*count*/)=>{
-	  	let people  = await store.getAllPeopleStore(skip,limit,/*count*/)
+	// controlador para endpoint free and platino
+	freeAndPlatinoPeopleController: async (skip,limit,countElements)=>{
+	  	if(countElements){
+	    	let countPeople  = await store.getCountFreeAndPlatinoPeopleStore()
+        	return countPeople	
+	    }
+	    if(!skip && !limit){
+	    	let people  = await store.getAllFreeAndPlatinoPeopleStore()
+        	let response = helpers.addAgeOnList(people)
+        	return response  
+	    }
+	  	let people  = await store.getPaginationFreeAndPlatinoPeopleStore(skip,limit)
 	  	let response = helpers.addAgeOnList(people)
-        return response
+        return response     
 	},
-	getFreeAndPlatinoPeopleController: async (skip,limit)=>{
-	  	let people  = await store.getFreeAndPlatinoPeopleStore(skip,limit)
+	// fin controlador para endpoint free and platino
+
+	// controlador para endpoint gold
+	goldPeopleController: async (skip,limit,countElements)=>{
+		
+		if(countElements){
+			let countPeople  = await store.getCountGoldPeopleStore()
+        	return countPeople
+		}
+	  	if(skip && limit){
+	    	let people  = await store.getPaginationGoldPeopleStore(skip,limit)
+	  		let response = helpers.addAgeOnList(people)
+        	return response     
+	    }
+	    
+	    let people  = await store.getGoldPeopleStore(skip,limit)
 	  	let response = helpers.addAgeOnList(people)
-        return response
+       	return response     
+	   
 	},
+	// controlador para endpoint all
+	/*goldPeopleController(skip,limit,membresia,countElements){
+		if(all){
+			let people  = await store.getAllPeopleStore(skip,limit)
+	  		let response = helpers.addAgeOnList(people)
+        	return response
+		}
+		if(countElements){
+			let countPeople  = await store.getCountGoldPeopleStore()
+        	return countPeople
+		}
+	  	if(skip && limit && all){
+	    	let people  = await store.getPaginationAllPeopleStore(skip,limit)
+	  		let response = helpers.addAgeOnList(people)
+        	return response     
+	    }
+	    if(skip && limit){
+	    	let people  = await store.getPaginationGoldPeopleStore(skip,limit)
+	  		let response = helpers.addAgeOnList(people)
+        	return response     
+	    }
+	    if(membresia){
+	    	let people  = await store.getByMembresiaPeopleStore(skip,limit)
+	  		let response = helpers.addAgeOnList(people)
+        	return response
+	    }
+	    if(skip && limit && membresia){
+	    	let people  = await store.getPaginationByMembresiaPeopleStore(skip,limit)
+	  		let response = helpers.addAgeOnList(people)
+        	return response     
+	    }
+	}, */
+
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	/* controlador para obtener por categorias
 	getPeopleController: async (skip,limit,category)=>{
 	  	let people  = await store.getPeopleStore(skip,limit,category)

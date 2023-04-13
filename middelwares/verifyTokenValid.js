@@ -8,7 +8,7 @@ function verificarTokenValido (req, res, next){
 	try {
 		const head = req.headers.authorization || req.headers.Authorization
 		if(!head){
-			res.send({message:'no enviaste autorization'})
+			return res.status(401).send({message:'no enviaste autorization'})
 		}
 		const token = head.split(" ")[1]
 	    const payload = jwt.verify(token,config.KEY_SECRET_TOKEN)
@@ -19,7 +19,13 @@ function verificarTokenValido (req, res, next){
 	    next()
 	}
 	catch{
-		res.send({message:'token con error'})
+		return res.status(401).send({message:'token con error'})
+		//es importante que cuando mando uan respeusta de error
+		//agregarle un codigo de estado de error http, ya que las herramientas
+		//en el frontend sabran si la respesuta es de error o no en base a esto, si por ejemplo se p
+		//si por ejemplo se prodijo un error en la logica de la api y solo mando una respuesta sin indicar
+		//indicar un codigo de estado de error, el cliente creara que la operacion
+		//salio bien
 	}
 	
 }
