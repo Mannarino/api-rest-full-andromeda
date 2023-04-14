@@ -51,6 +51,24 @@ const controllerPeople = {
        	return response     
 	   
 	},
+	getPersonByIdController: async (id)=>{
+
+		const updatedPerson= await store.getPersonByIdStore(id)
+		
+        return updatedPerson
+	},
+	updatePersonController: async (id,body)=>{
+
+		const updatedPerson= await store.updatePersonStore(id,body)
+		
+        return updatedPerson
+	},
+	deletePersonByIdController: async (id)=>{
+
+		const eliminatedPerson= await store.deletePersonByIdStore(id)
+		
+        return eliminatedPerson
+	}
 	// controlador para endpoint all
 	/*goldPeopleController(skip,limit,membresia,countElements){
 		if(all){

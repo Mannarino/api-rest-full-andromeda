@@ -83,26 +83,26 @@ const storePeople = {
 											.limit(limit)	
 	    return completeList
 	},
+	updatePersonStore: async(id,body)=>{
+		const updatedPerson= await model.findByIdAndUpdate(id,body)
+		
+        return updatedPerson
+	}
+
 	
-	/* getPersonById: async (id)=>{
+	,getPersonByIdStore: async (id)=>{
 
 		const personById= await model.findById(id)
 		
         return personById
 	}
 	,
-	updatePersonById: async (id,body)=>{
-
-		const updatedPerson= await model.findByIdAndUpdate(id,body)
-		
-        return updatedPerson
-	},
-	deletePersonById: async (id)=>{
+	deletePersonByIdStore: async (id)=>{
 
 		const eliminatedPerson= await model.findByIdAndDelete(id)
 		
         return eliminatedPerson
-	}*/
+	}
 }
 
 module.exports = storePeople

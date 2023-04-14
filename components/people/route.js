@@ -73,6 +73,27 @@ router.post('/gold',verifyToken,PeopleCreateValidations, async (req,res)=>{
 	  	return res.status(500).send('internal server error')
 	  }		
 })
+router.get('/gold/:id',async(req,res)=>{ 
+	  const id = req.params.id
+	  
+        let response = await controller.getPersonByIdController(id)
+        res.send(response)  
+
+})
+router.put('/gold/:id',async(req,res)=>{ 
+	  const id = req.params.id
+	  
+        let response = await controller.updatePersonController(id,req.body)
+        res.send(response)  
+
+})
+router.delete('/gold/:id',async(req,res)=>{ 
+	  const id = req.params.id
+	  
+        let response = await controller.deletePersonByIdController(id)
+        res.send(response)  
+
+})
 /*router.get('/', async(req,res)=>{ 
 	  const limit = parseInt(req.query.limit); // Asegúrate de parsear el límite a número
       const skip = parseInt(req.query.skip);// Asegúrate de parsear el salto a número
