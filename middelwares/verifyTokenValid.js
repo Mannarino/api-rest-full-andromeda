@@ -5,6 +5,8 @@ const config =obtenerValoresDeEntorno()
 
 //solo verifica que sea un token valido
 function verificarTokenValido (req, res, next){
+	console.log(config.KEY_SECRET_TOKEN)
+	
 	try {
 		const head = req.headers.authorization || req.headers.Authorization
 		if(!head){
@@ -19,6 +21,7 @@ function verificarTokenValido (req, res, next){
 	    next()
 	}
 	catch{
+		console.log('se rechazo el token')
 		return res.status(401).send({message:'token con error'})
 		//es importante que cuando mando uan respeusta de error
 		//agregarle un codigo de estado de error http, ya que las herramientas

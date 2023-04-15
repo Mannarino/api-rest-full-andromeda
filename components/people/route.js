@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const controller = require('./controller.js')
 const verifyToken = require('./../../middelwares/verifyTokenValid')
+const verifyMembresia = require('./../../middelwares/verifyRol')
 const PeopleCreateValidations = require('./../../validations/PeopleCreateValidations')
 
 //endopint free y platino,
@@ -73,21 +74,22 @@ router.post('/gold',verifyToken,PeopleCreateValidations, async (req,res)=>{
 	  	return res.status(500).send('internal server error')
 	  }		
 })
-router.get('/gold/:id',async(req,res)=>{ 
+router.get('/gold/:id',verifyToken,async(req,res)=>{ 
+	  console.log('entro a endpoint gold person, by id')
 	  const id = req.params.id
 	  
         let response = await controller.getPersonByIdController(id)
         res.send(response)  
 
 })
-router.put('/gold/:id',async(req,res)=>{ 
+router.put('/gold/:id',verifyToken,verifyMembresia('gold'),async(req,res)=>{ 
 	  const id = req.params.id
 	  
         let response = await controller.updatePersonController(id,req.body)
         res.send(response)  
 
 })
-router.delete('/gold/:id',async(req,res)=>{ 
+router.delete('/gold/:id',verifyToken,verifyMembresia('gold'),async(req,res)=>{ 
 	  const id = req.params.id
 	  
         let response = await controller.deletePersonByIdController(id)
