@@ -11,8 +11,11 @@ router.get('/free-and-platino', async(req,res)=>{
 	    const limit = parseInt(req.query.limit); // Asegúrate de parsear el límite a número
         const skip = parseInt(req.query.skip);// Asegúrate de parsear el salto a número
 	    const countElements = req.query.count 
-	   
-        let response = await controller.freeAndPlatinoPeopleController(skip,limit,countElements)
+	    const  category = req.query.category
+	    const  viewAllowed = req.query.viewAllowed
+	    const  buscador = req.query.buscador
+        console.log(category)
+        let response = await controller.freeAndPlatinoPeopleController(skip,limit,countElements,category,viewAllowed,buscador)
         res.send(response)
 	     
 })
@@ -23,8 +26,10 @@ router.get('/gold', verifyToken, async(req,res)=>{
 	  const limit = parseInt(req.query.limit); // Asegúrate de parsear el límite a número
       const skip = parseInt(req.query.skip);// Asegúrate de parsear el salto a número
 	  const countElements = req.query.count 
-	  
-	  let response = await controller.goldPeopleController(skip,limit,countElements)
+	  const  category = req.query.category
+	  const  viewAllowed = req.query.viewAllowed
+	  const  buscador = req.query.buscador
+	  let response = await controller.goldPeopleController(skip,limit,countElements,category,viewAllowed,buscador)
       res.send(response)  	
     
 })
