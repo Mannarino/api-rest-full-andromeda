@@ -11,6 +11,6 @@ const peopleScheme =
 					  required:true,
 					  enum:['woman','man','dead','alive']}],
 		})
-const modelPeople = mongoose.model('people',peopleScheme)
+const modelPeople = mongoose.model('people-private',peopleScheme)
 
 module.exports = modelPeople
