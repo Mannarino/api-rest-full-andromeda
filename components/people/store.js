@@ -1,7 +1,7 @@
 const model = require('./model')
 
 const storePeople = {
-	createPersonStore: async (name,birthDay,passAway,yearPassAway,photo,category,viewAllowed)=>{
+	createPersonStore: async (name,birthDay,passAway,yearPassAway,photo,category)=>{
         
         if(yearPassAway === undefined){
             //notDiedYet = date that means that person has not died yet
@@ -14,8 +14,7 @@ const storePeople = {
 			passAway,
 			yearPassAway,
 			photo,
-			category,
-			viewAllowed
+			category
 		})
 	
         return createdPerson

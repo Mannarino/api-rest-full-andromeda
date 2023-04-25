@@ -7,8 +7,7 @@ const response = require('./../network/responses.js')
 			passAway,
 			yearPassAway,
 			photo,
-			category,
-			viewAllowed} = req.body
+			category} = req.body
 		if(!name){
 			return response.error(req,res,{createPeople:false}," no enviaste el name")
 		}
@@ -27,9 +26,7 @@ const response = require('./../network/responses.js')
 		if(!category){
 			return response.error(req,res,{createPeople:false}," no enviaste el category")
 		}
-		if(!viewAllowed){
-			return response.error(req,res,{createPeople:false}," no enviaste el viewAllowed")
-		}
+		
 		
 		next()
 	}

@@ -2,7 +2,7 @@ const store = require('./store.js')
 const helpers = require('./helpers.js')
 
 const controllerPeople = {
-	createPersonController: async (name,birthDay,passAway,yearPassAway,photo,category,viewAllowed)=>{
+	createPersonController: async (name,birthDay,passAway,yearPassAway,photo,category)=>{
         
 		const createdPerson= await store.createPersonStore(
 			name,
@@ -10,8 +10,7 @@ const controllerPeople = {
 			passAway,
 			yearPassAway,
 			photo,
-			category,
-			viewAllowed
+			category
 		)
 		
         return createdPerson

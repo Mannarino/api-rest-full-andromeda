@@ -44,7 +44,7 @@ router.get('/gold', verifyToken, async(req,res)=>{
       res.send(response)  	
     
 }) */
-router.post('/free-and-platino',PeopleCreateValidations, async (req,res)=>{
+router.post('/public',PeopleCreateValidations, async (req,res)=>{
 	console.log(req.body)
 	    const name = req.body.name
 		const birthDay = req.body.birthDay
@@ -52,9 +52,9 @@ router.post('/free-and-platino',PeopleCreateValidations, async (req,res)=>{
 		const yearPassAway = req.body.yearPassAway
 		const photo = req.body.photo
 		const category = req.body.category
-		const viewAllowed = req.body.viewAllowed
+		
 	  try{
-	  	 response= await controller.createPersonController(name,birthDay,passAway,yearPassAway,photo,category,viewAllowed)
+	  	 response= await controller.createPersonController(name,birthDay,passAway,yearPassAway,photo,category)
 	  	res.send(response)
 	  }catch(e){
 	  	console.log(e)
