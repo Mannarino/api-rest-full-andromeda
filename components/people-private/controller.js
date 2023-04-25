@@ -2,7 +2,7 @@ const store = require('./store.js')
 const helpers = require('./helpers.js')
 
 const controllerPeople = {
-	createPersonController: async (name,birthDay,passAway,yearPassAway,photo,category,viewAllowed)=>{
+	createPersonController: async (name,birthDay,passAway,yearPassAway,photo,category)=>{
         
 		const createdPerson= await store.createPersonStore(
 			name,
@@ -10,111 +10,47 @@ const controllerPeople = {
 			passAway,
 			yearPassAway,
 			photo,
-			category,
-			viewAllowed
+			category
 		)
 		
         return createdPerson
 	},
-	// controlador para endpoint free and platino
-	freeAndPlatinoPeopleController: async (skip,limit,countElements,category,viewAllowed,buscador)=>{
-	  	if(countElements && category){
-	    	let countPeople  = await store.getCountByCategoryFreeAndPlatinoPeopleStore(category)
-        	return countPeople	
-	    }
-	    if(countElements && viewAllowed){
-	    	let countPeople  = await store.getCountByViewAllowedFreeAndPlatinoPeopleStore(viewAllowed)
-        	return countPeople	
-	    }
-	  	if(countElements){
-	    	let countPeople  = await store.getCountFreeAndPlatinoPeopleStore()
-        	return countPeople	
-	    }
-	    if(buscador){
-	    	let countPeople  = await store.getBuscadorFreeAndPlatinoPeopleStore(buscador)
-        	return countPeople	
-	    }
-	    if(viewAllowed){
-		    	if(!skip && !limit){
-		    	let people  = await store.getByViewAllowedFreeAndPlatinoPeopleStore(skip,limit,viewAllowed)
-	        	let response = helpers.addAgeOnList(people)
-	        	return response  
-		    }else{
-		    	let people  = await store.getByViewAllowedAndPaginationFreeAndPlatinoPeopleStore(skip,limit,viewAllowed)
-	        	let response = helpers.addAgeOnList(people)
-	        	return response 
-		    }
-	    }
-	    if(category){
-		    	if(!skip && !limit){
-		    	let people  = await store.getByCategoriaFreeAndPlatinoPeopleStore(skip,limit,category)
-	        	let response = helpers.addAgeOnList(people)
-	        	return response  
-		    }else{
-		    	let people  = await store.getByCategoriaAndPaginationFreeAndPlatinoPeopleStore(skip,limit,category)
-	        	let response = helpers.addAgeOnList(people)
-	        	return response 
-		    }
-	    }
-	    if(!skip && !limit){
-	    	let people  = await store.getAllFreeAndPlatinoPeopleStore()
-        	let response = helpers.addAgeOnList(people)
-        	return response  
-	    }
-	    
-	  	let people  = await store.getPaginationFreeAndPlatinoPeopleStore(skip,limit)
-	  	let response = helpers.addAgeOnList(people)
-        return response     
-	},
-	// fin controlador para endpoint free and platino
+	
+	
 
 	// controlador para endpoint gold
-	goldPeopleController: async (skip,limit,countElements,category,viewAllowed,buscador)=>{
+	privatePeopleController: async (skip,limit,countElements,category,buscador)=>{
 		if(countElements && category){
-	    	let countPeople  = await store.getCountByCategoryGoldPeopleStore(category)
-        	return countPeople	
-	    }
-	    if(countElements && viewAllowed){
-	    	let countPeople  = await store.getCountByViewAllowedGoldPeopleStore(viewAllowed)
+	    	let countPeople  = await store.getCountByCategoryPrivatePeopleStore(category)
         	return countPeople	
 	    }
 		if(countElements){
-			let countPeople  = await store.getCountGoldPeopleStore()
+			let countPeople  = await store.getCountPrivatePeopleStore()
         	return countPeople
 		}
 		if(buscador){
-	    	let countPeople  = await store.getBuscadorGoldPeopleStore(buscador)
+	    	let countPeople  = await store.getBuscadorPrivatePeopleStore(buscador)
         	return countPeople	
 	    }
-	    if(viewAllowed){
-		    	if(!skip && !limit){
-		    	let people  = await store.getByViewAllowedGoldPeopleStore(skip,limit,viewAllowed)
-	        	let response = helpers.addAgeOnList(people)
-	        	return response  
-		    }else{
-		    	let people  = await store.getByViewAllowedAndPaginationGoldPeopleStore(skip,limit,viewAllowed)
-	        	let response = helpers.addAgeOnList(people)
-	        	return response 
-		    }
-	    }
+	    
 	    if(category){
 		    	if(!skip && !limit){
-		    	let people  = await store.getByCategoriaGoldPeopleStore(skip,limit,category)
+		    	let people  = await store.getByCategoriaPrivatePeopleStore(skip,limit,category)
 	        	let response = helpers.addAgeOnList(people)
 	        	return response  
 		    }else{
-		    	let people  = await store.getByCategoriaAndPaginationGoldPeopleStore(skip,limit,category)
+		    	let people  = await store.getByCategoriaAndPaginationPrivatePeopleStore(skip,limit,category)
 	        	let response = helpers.addAgeOnList(people)
 	        	return response 
 		    }
 	    }
 	  	if(skip && limit){
-	    	let people  = await store.getPaginationGoldPeopleStore(skip,limit)
+	    	let people  = await store.getPaginationPrivatePeopleStore(skip,limit)
 	  		let response = helpers.addAgeOnList(people)
         	return response     
 	    }
 	    
-	    let people  = await store.getGoldPeopleStore(skip,limit)
+	    let people  = await store.getPrivatePeopleStore(skip,limit)
 	  	let response = helpers.addAgeOnList(people)
        	return response     
 	   

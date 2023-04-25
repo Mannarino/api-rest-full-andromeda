@@ -19,19 +19,7 @@ router.get('/public', async(req,res)=>{
 	     
 })
 
-//enpoint gold se requiere token para obtener esta data
-router.get('/gold', verifyToken, async(req,res)=>{ 
-	console.log('llego el request a gold')
-	  const limit = parseInt(req.query.limit); // Asegúrate de parsear el límite a número
-      const skip = parseInt(req.query.skip);// Asegúrate de parsear el salto a número
-	  const countElements = req.query.count 
-	  const  category = req.query.category
-	  const  viewAllowed = req.query.viewAllowed
-	  const  buscador = req.query.buscador
-	  let response = await controller.goldPeopleController(skip,limit,countElements,category,viewAllowed,buscador)
-      res.send(response)  	
-    
-})
+
 //enpoint all se requiere token para obtener esta data
 /*router.get('/all',verifyToken, async(req,res)=>{ 
 	  const limit = parseInt(req.query.limit); // Asegúrate de parsear el límite a número
@@ -61,45 +49,7 @@ router.post('/public',PeopleCreateValidations, async (req,res)=>{
 	  	res.status(500).send('internal server error')
 	  }		
 })
-router.post('/gold',verifyToken,PeopleCreateValidations, async (req,res)=>{
-	console.log(req.body)
-	    const name = req.body.name
-		const birthDay = req.body.birthDay
-		const passAway = req.body.passAway
-		const yearPassAway = req.body.yearPassAway
-		const photo = req.body.photo
-		const category = req.body.category
-		const viewAllowed = req.body.viewAllowed
-	  try{
-	  	 response= await controller.createPersonController(name,birthDay,passAway,yearPassAway,photo,category,viewAllowed)
-	  	 return res.send(response)
-	  }catch(e){
-	  	console.log(e)
-	  	return res.status(500).send('internal server error')
-	  }		
-})
-router.get('/gold/:id',verifyToken,async(req,res)=>{ 
-	  console.log('entro a endpoint gold person, by id')
-	  const id = req.params.id
-	  
-        let response = await controller.getPersonByIdController(id)
-        res.send(response)  
 
-})
-router.put('/gold/:id',verifyToken,verifyMembresia('gold'),async(req,res)=>{ 
-	  const id = req.params.id
-	  
-        let response = await controller.updatePersonController(id,req.body)
-        res.send(response)  
-
-})
-router.delete('/gold/:id',verifyToken,verifyMembresia('gold'),async(req,res)=>{ 
-	  const id = req.params.id
-	  
-        let response = await controller.deletePersonByIdController(id)
-        res.send(response)  
-
-})
 /*router.get('/', async(req,res)=>{ 
 	  const limit = parseInt(req.query.limit); // Asegúrate de parsear el límite a número
       const skip = parseInt(req.query.skip);// Asegúrate de parsear el salto a número

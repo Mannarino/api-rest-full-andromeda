@@ -7,14 +7,10 @@ const peopleScheme =
 			yearPassAway:{type:Date},
 			passAway:{type:Boolean },
 			photo:{type:String,required:true},
-			category:{type:String,
+			category:[{type:String,
 					  required:true,
-					  enum:['woman','man','not-specified']},
-			viewAllowed:{type:String,
-				         required:true, 
-				         enum:['free','platino','gold']}
+					  enum:['woman','man','dead','alive']}],
 		})
-
 const modelPeople = mongoose.model('people',peopleScheme)
 
 module.exports = modelPeople
