@@ -8,15 +8,18 @@ const PeopleCreateValidations = require('./../../validations/PeopleCreateValidat
 
 
 //enpoint gold se requiere token para obtener esta data
-router.get('/', verifyToken, async(req,res)=>{ 
-	console.log('llego el request a gold')
+router.get('/', async(req,res)=>{ 
+	 console.log('La URL completa es:', req.originalUrl);
+	console.log('llego el request a goldddddddddddmiddd')
 	  const limit = parseInt(req.query.limit); // Asegúrate de parsear el límite a número
       const skip = parseInt(req.query.skip);// Asegúrate de parsear el salto a número
-	  const countElements = req.query.count 
+	  const count = req.query.count 
 	  const  category = req.query.category
-	  
+	  console.log('este es el objeto req.query que llego a la ruta private',req.query)
+	  console.log('count en la ruta')
+	  console.log(count)
 	  const  buscador = req.query.buscador
-	  let response = await controller.privatePeopleController(skip,limit,countElements,category,buscador)
+	  let response = await controller.privatePeopleController(skip,limit,count,category,buscador)
       res.send(response)  	
     
 })
@@ -41,9 +44,9 @@ router.post('/',verifyToken,PeopleCreateValidations, async (req,res)=>{
 		const yearPassAway = req.body.yearPassAway
 		const photo = req.body.photo
 		const category = req.body.category
-		const viewAllowed = req.body.viewAllowed
+		
 	  try{
-	  	 response= await controller.createPersonController(name,birthDay,passAway,yearPassAway,photo,category,viewAllowed)
+	  	 response= await controller.createPersonController(name,birthDay,passAway,yearPassAway,photo,category)
 	  	 return res.send(response)
 	  }catch(e){
 	  	console.log(e)

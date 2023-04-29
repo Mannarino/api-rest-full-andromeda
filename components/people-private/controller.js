@@ -19,12 +19,15 @@ const controllerPeople = {
 	
 
 	// controlador para endpoint gold
-	privatePeopleController: async (skip,limit,countElements,category,buscador)=>{
-		if(countElements && category){
+	privatePeopleController: async (skip,limit,count,category,buscador)=>{
+		console.log('se entro al controllador private')
+		console.log(count)
+		if(count && category){
 	    	let countPeople  = await store.getCountByCategoryPrivatePeopleStore(category)
         	return countPeople	
 	    }
-		if(countElements){
+		if(count){
+			console.log('se consulto la cantidad en people private')
 			let countPeople  = await store.getCountPrivatePeopleStore()
         	return countPeople
 		}
@@ -44,13 +47,13 @@ const controllerPeople = {
 	        	return response 
 		    }
 	    }
-	  	if(skip && limit){
-	    	let people  = await store.getPaginationPrivatePeopleStore(skip,limit)
+	  	if(!skip && !limit){
+	    	let people  = await store.getPrivatePeopleStore()
 	  		let response = helpers.addAgeOnList(people)
         	return response     
 	    }
 	    
-	    let people  = await store.getPrivatePeopleStore(skip,limit)
+	    let people  = await store.getPaginationPrivatePeopleStore(skip,limit)
 	  	let response = helpers.addAgeOnList(people)
        	return response     
 	   
@@ -105,24 +108,6 @@ const controllerPeople = {
         	return response     
 	    }
 	}, */
-
-     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

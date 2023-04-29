@@ -49,7 +49,28 @@ router.post('/public',PeopleCreateValidations, async (req,res)=>{
 	  	res.status(500).send('internal server error')
 	  }		
 })
+router.get('/public/:id',verifyToken,async(req,res)=>{ 
+	  console.log('entro a endpoint gold person, by id')
+	  const id = req.params.id
+	  
+        let response = await controller.getPersonByIdController(id)
+        res.send(response)  
 
+})
+router.put('/public/:id',verifyToken,verifyMembresia('gold'),async(req,res)=>{ 
+	  const id = req.params.id
+	  
+        let response = await controller.updatePersonController(id,req.body)
+        res.send(response)  
+
+})
+router.delete('/public/:id',verifyToken,verifyMembresia('gold'),async(req,res)=>{ 
+	  const id = req.params.id
+	  
+        let response = await controller.deletePersonByIdController(id)
+        res.send(response)  
+
+})
 /*router.get('/', async(req,res)=>{ 
 	  const limit = parseInt(req.query.limit); // Asegúrate de parsear el límite a número
       const skip = parseInt(req.query.skip);// Asegúrate de parsear el salto a número

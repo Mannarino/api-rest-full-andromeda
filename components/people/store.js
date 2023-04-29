@@ -53,7 +53,7 @@ const storePeople = {
 		/*When methods skip and limit receive an invalid value, 
 		they automatically ignore it and do not act, and 
 		only work when they receive a valid integer */  	
-		let response = await model.find({ category: category})	
+		let response = await model.find({ category: category}).skip(skip).limit(limit) 	
 
         return response	
 	},
