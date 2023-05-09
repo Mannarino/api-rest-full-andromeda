@@ -24,7 +24,7 @@ async function registValidUser(req,res,next){
 		next()
 		}
 	catch{
-		return response.error(req,res,{regist:false},"error interno del servidor",400)
+		return response.error(req,res,{regist:false},"error interno del servidor",500)
 	}
 }
 

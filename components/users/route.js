@@ -23,7 +23,7 @@ router.get('/checkEmailAvailable', async (req,res)=>{
 router.post('/regist',validationsRegis, async (req,res)=>{
 	const responseController = await controller.registUser(req.body.name,req.body.email,req.body.password)
 	if(responseController.success){
-		response.success(req,res,{regist:true}," user created successfuly",201,{token:responseController.token})
+		response.success(req,res,{regist:true}," user created successfuly",201,responseController.data)
 	}else{
 		response.error(req,res,{regist:false}," internal error server")
 	}

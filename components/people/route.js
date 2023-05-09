@@ -32,7 +32,7 @@ router.get('/public', async(req,res)=>{
       res.send(response)  	
     
 }) */
-router.post('/public',PeopleCreateValidations, async (req,res)=>{
+router.post('/public',PeopleCreateValidations,verifyToken, async (req,res)=>{
 	console.log(req.body)
 	    const name = req.body.name
 		const birthDay = req.body.birthDay

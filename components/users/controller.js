@@ -13,15 +13,24 @@ usersCtrl.registUser = async (name, email, password)=>{
 			name: name,
 	    	email: email,
 	    	password : hashedPassword,
-	    	rol:"basic"
+	    	rol:"free"
 		})
 		const payload = {
-			rol:"basic"
+			rol:"free"
 		}
 		const token = jwt.sign(payload,config.KEY_SECRET_TOKEN,{expiresIn:'3h'})
-		return {success:true,token:token}
+		const data = {
+        	token:token,
+        	user:{
+        		email: user.email,
+        		name: user.name,
+        		rol: user.rol
+        	}
+        }
+		return {success:true,data}
 	} 
-	catch{
+	catch(error){
+		console.log(error)
 		return {success:false,message: "error interno del servidor"}
 	}
 	
@@ -40,6 +49,7 @@ usersCtrl.loginUser = async (req)=>{
 		const payload = {
         		rol: user.rol
 			}
+		//const token = jwt.sign(payload,config.KEY_SECRET_TOKEN,{expiresIn:'30s'})	
 		const token = jwt.sign(payload,config.KEY_SECRET_TOKEN,{expiresIn:'3h'})
         const data = {
         	token:token,

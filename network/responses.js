@@ -9,7 +9,7 @@ exports.success= function(req, res,operation , message, statusCode ,data){
 }
 
 exports.error= function(req, res,operation ,  message, statusCode,details){
-	console.log(details)
+	console.log('error no se registro',details)
 	res.status(statusCode || 500)
 	res.json({
 		operation:operation,
