@@ -5,7 +5,6 @@ const config =obtenerValoresDeEntorno()
 
 //solo verifica que sea un token valido
 function verificarTokenValido (req, res, next){
-	console.log(config.KEY_SECRET_TOKEN)
 	
 	try {
 		const head = req.headers.authorization || req.headers.Authorization

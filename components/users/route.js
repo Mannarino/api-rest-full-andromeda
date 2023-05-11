@@ -1,15 +1,14 @@
 var express = require ('express')
-const mongoose = require('mongoose')
-const modelo = require('./model.js')
 var controller = require('./controller')
 var router = express.Router()
+const verifyToken = require('./../../middelwares/verifyTokenValid')
+const verifyMembresia = require('./../../middelwares/verifyRol')
 const validationsRegis = require('./../../validations/UsersRegistValidations.js')
 const validationsLogin = require('./../../validations/UsersLoginValidations.js')
 const response = require('./../../network/responses.js')
 
-router.get('/',(req,res)=>{
-	modelo.find({})
-	.then(data =>res.send(data) )
+router.get('/',async (req,res)=>{
+	const users= await controller.getUsers(res)
      
 })
 router.get('/checkEmailAvailable', async (req,res)=>{
@@ -44,16 +43,18 @@ router.get('/:id',(req,res)=>{
 
 
 
-router.put('/:id',async (req,res)=>{
+router.put('/:id',verifyToken,verifyMembresia('gold'),async (req,res)=>{
 	const _id = req.params.id;
 	const name = req.body.name
 	const email = req.body.email
 	const rol = req.body.rol
-    const userUpdated = await  controller.updateUser(_id,name, email, rol)
-	res.json(userUpdated)
+    const userUpdated = await  controller.updateUser(_id,name, email, rol,res)
+	
 })
 
-router.delete('/:id',(req,res)=>{
+router.delete('/:id',verifyToken,verifyMembresia('gold'),async (req,res)=>{
+	const _id = req.params.id;
+	const userUpdated = await  controller.deleteUser(_id,res)
 	
 })
 
